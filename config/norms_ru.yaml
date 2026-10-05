@@ -1,0 +1,191 @@
+version: "2026-10-04c"
+
+policy:
+  use_foreign: false
+  foreign_allowed: [vitamin_b12, active_b12, homocysteine]
+  decided: "команда проекта, 04.10.2026; B12, активный B12, гомоцистеин — по NICE NG239, ожидает подтверждения врачом"
+
+sources:
+  who_hb_2024: {title: "ВОЗ, 2024: пороги гемоглобина для определения анемии", url: "https://www.ncbi.nlm.nih.gov/books/NBK602183/"}
+  who_ferritin_2020: {title: "ВОЗ, 2020: ферритин для оценки запасов железа", url: "https://www.ncbi.nlm.nih.gov/books/NBK569876/"}
+  kr_ida_2024: {title: "КР Минздрава РФ «Железодефицитная анемия», 2024 (ID 669)", url: "https://cr.minzdrav.gov.ru/"}
+  kr_b12_2024: {title: "КР Минздрава РФ «Витамин-B12-дефицитная анемия», 2024 (ID 536)", url: "https://cr.minzdrav.gov.ru/"}
+  kr_folate_2024: {title: "КР Минздрава РФ «Фолиеводефицитная анемия», 2024 (ID 540)", url: "https://cr.minzdrav.gov.ru/"}
+  nice_ng239: {title: "NICE NG239, 2024 (зарубежный источник; в КР РФ числового порога нет)", url: "https://www.nice.org.uk/guidance/ng239/chapter/recommendations"}
+  bcsh_2014: {title: "BCSH, 2014 (Великобритания; по резюме)", url: ""}
+  ckd_epi_2021: {title: "CKD-EPI 2021 (формула рСКФ по креатинину)", url: "https://www.kidney.org/ckd-epi-creatinine-equation-2021"}
+  kr_ckd: {title: "КР Минздрава РФ «Хроническая болезнь почек»: стадии С3 (рСКФ < 60) и С4 (рСКФ < 30); по тексту не сверено", url: "https://cr.minzdrav.gov.ru/"}
+  mentzer_1973: {title: "Индекс Ментцера (Mentzer WC. Lancet. 1973;1(7808):882)", url: "https://www.aafp.org/afp/2009/0815/p339"}
+  lab_reference: {title: "общепринятый диапазон (проект); ожидает подтверждения врачом", url: ""}
+  project: {title: "решение команды проекта, ожидает подтверждения врачом", url: ""}
+  project_reference: {title: "референс проекта по умолчанию (сводная таблица команды, 04.10.2026); ожидает подтверждения врачом", url: ""}
+  cdc_iron: {title: "CDC, Iron-Status Indicators", url: "https://www.cdc.gov/nutrition-report/media/pdfs/2026/06/Iron-Indicators-508.pdf"}
+  hemasphere_2024: {title: "Рекомендации по диагностике дефицита железа и ЖДА, 2024 (в таблице подписано «British Journal of Haematology», ссылка ведёт на HemaSphere; сверить)", url: "https://onlinelibrary.wiley.com/doi/10.1002/hem3.108"}
+  gemotest_ldh: {title: "Гемотест: ЛДГ у взрослых, мужчины 135–225 Ед/л, женщины 135–214 Ед/л (решение врача 04.10.2026)", url: "https://gemotest.ru/"}
+  smclinic_bili: {title: "СМ-Клиника: непрямой билирубин у взрослых до 16,4 мкмоль/л (решение врача 04.10.2026)", url: "https://www.smclinic.ru/"}
+  invitro_retic: {title: "ИНВИТРО: ретикулоциты у взрослых 6,8–18,6 ‰ (0,68–1,86 %) (решение врача 04.10.2026)", url: "https://www.invitro.ru/"}
+  invitro_cerulo: {title: "ИНВИТРО: церулоплазмин, половые референсы взрослых (решение врача 04.10.2026)", url: "https://www.invitro.ru/"}
+  hapto_fallback: {title: "референс по умолчанию 0,83–2,67 г/л — не универсальный российский норматив; приоритет у референса лаборатории (решение врача 04.10.2026)", url: ""}
+  hemolysis_rule: {title: "решение врача команды проекта 04.10.2026: гемолиз по сочетанию признаков; Merck Manual, AAFP, BMJ", url: ""}
+  masac_296: {title: "MASAC Document 296: лабораторный скрининг дефицита железа", url: "https://www.bleeding.org/healthcare-professionals/guidelines-on-care/masac-documents/masac-document-296-recommendations-for-laboratory-screening-of-iron-deficiency-with-and-without-anemia"}
+
+hemoglobin:
+  anemia_below: {F: 120, M: 130}
+  severity:
+    F: {mild: [110, 120], moderate: [80, 110], severe_below: 80}
+    M: {mild: [110, 130], moderate: [80, 110], severe_below: 80}
+  pregnancy:
+    anemia_below: {1: 110, 2: 105, 3: 110, unknown: 110}
+    severity:
+      1: {mild: [100, 110], moderate: [70, 100], severe_below: 70}
+      2: {mild: [95, 105], moderate: [70, 95], severe_below: 70}
+      3: {mild: [100, 110], moderate: [70, 100], severe_below: 70}
+      unknown: {mild: [100, 110], moderate: [70, 100], severe_below: 70}
+  source: who_hb_2024
+  status: verified
+  age_max: 65
+  age_note: "Пороги ВОЗ 2024 даны для 15–65 лет; старше 65 лет применяются по аналогии."
+  ru_note: "В КР «Железодефицитная анемия» 2024 дана норма: 120–140 г/л у женщин, 130–160 г/л у мужчин."
+
+urgent:
+  hemoglobin_below: {default: 80, pregnant: 70}
+  wbc_below: 2.0
+  platelets_below: 50
+  source: project
+  status: needs_medical_expert
+  labels: {hemoglobin: "тяжёлая анемия по ВОЗ", wbc: "выбор проекта", platelets: "выбор проекта"}
+  sources: {hemoglobin: who_hb_2024, wbc: project, platelets: project}
+  note: "Порог гемоглобина — тяжёлая анемия по ВОЗ; пороги лейкоцитов и тромбоцитов и сама срочность — выбор проекта."
+
+crp:
+  inflammation_above: 5
+  source: who_ferritin_2020
+  status: verified
+  note: "Порог СРБ > 5 мг/л ВОЗ приводит в замечаниях о поправке ферритина в обследованиях населения; для отдельного пациента — «оценивать маркеры воспаления вместе с ферритином»."
+
+ferritin:
+  deficiency_below: {who: 15, ru: 30}
+  inflammation_below: 70
+  treatment_target: [40, 60]
+  sources: {who: who_ferritin_2020, ru: kr_ida_2024, inflammation: who_ferritin_2020, target: kr_ida_2024}
+  status: {who: verified, ru: secondary, inflammation: verified, target: secondary}
+  inflammation_note: "порог 70 при воспалении — условная рекомендация ВОЗ, низкая достоверность данных"
+  ru_label: "порог практики РФ; в КР 2024 число дано для латентного дефицита у беременных и для контроля депо"
+  note: "В КР РФ 2024 числового порога ферритина для диагностики у взрослых нет."
+  pregnancy_note: "У беременных ферритин не оценивается: для них только уровень 1 (решение команды проекта 04.10.2026); оценку проводит врач, ведущий беременность."
+
+tsat: {low_below: 17.8, source: kr_ida_2024, status: secondary, note: "нижняя граница референса КР: 17,8–43,3 %"}
+serum_iron: {low_below: 10.7, high_above: 32.2, source: kr_ida_2024, status: secondary}
+tibc: {low_below: 46, high_above: 78, source: kr_ida_2024, status: secondary}
+transferrin: {low_below: 2.0, high_above: 3.6, source: kr_ida_2024, status: secondary}
+ret_he: {low_below: 30.6, source: kr_ida_2024, status: secondary}
+stfr: {high_above: null, source: lab_reference, status: needs_medical_expert, note: "порог зависит от метода; оценивать по референсу лаборатории"}
+
+vitamin_b12: {deficiency_below: 180, gray_zone: [180, 350], gray_zone_inclusive: true, origin: foreign, source: nice_ng239, status: needs_medical_expert, note: "в КР РФ числового порога нет; NICE NG239 — зарубежный источник, применяется по решению команды проекта 04.10.2026, ожидает подтверждения врачом"}
+active_b12: {deficiency_below: 25, gray_zone: [25, 70], gray_zone_inclusive: true, origin: foreign, source: nice_ng239, status: needs_medical_expert, note: "в КР РФ числового порога нет; NICE NG239 — зарубежный источник, применяется по решению команды проекта 04.10.2026, ожидает подтверждения врачом"}
+homocysteine: {high_above: 15, origin: foreign, source: nice_ng239, status: needs_medical_expert, note: "в КР РФ числового порога нет; порог > 15 мкмоль/л — по решению команды проекта 04.10.2026, подпись NICE NG239; неспецифичен (B12, фолаты, B6, ХБП)"}
+mma: {source: project_reference, status: needs_medical_expert, note: "диагностического порога нет: обычно < 0,30 мкмоль/л, зависит от метода; в рознице Москвы отдельным анализом крови недоступна"}
+folate: {deficiency_below: 4, borderline: [4, 8], source: kr_folate_2024, status: secondary, note: "в тексте КР опечатка в единице; по смыслу нг/мл"}
+
+vitamin_b6: {deficiency_below: 20, source: lab_reference, status: needs_medical_expert}
+copper: {deficiency_below: 11, source: lab_reference, status: needs_medical_expert}
+ceruloplasmin: {source: invitro_cerulo, status: needs_medical_expert, note: "белок острой фазы; оценивается только вместе с медью; нормальный не исключает дефицит меди"}
+
+hemolysis:
+  min_signs: 2
+  retic_hct_norm: {F: 42, M: 45}
+  source: hemolysis_rule
+  status: needs_medical_expert
+
+egfr: {reduced_below: 60, severe_below: 30, source: kr_ckd, formula_source: ckd_epi_2021, status: needs_medical_expert}
+tsh: {high_above: 4.0, marked_above: 10.0, source: lab_reference, status: needs_medical_expert}
+
+indices:
+  mcv_micro_below: 80
+  mcv_macro_above: 100
+  mch_low_below: 27
+  rdw_high_above: 14.5
+  mentzer_thalassemia_like_below: 13
+  mentzer_source: mentzer_1973
+  note: "Индекс Ментцера считается только при микроцитозе и показывается только врачу: меньше 13 — вероятнее носительство β-талассемии (подтверждение — электрофорез гемоглобина); больше 13 — скорее дефицит железа, чем носительство; ровно 13 — неопределённо."
+  source: lab_reference
+  status: needs_medical_expert
+
+no_reference_yet: []
+
+reference_ranges:
+  source: project_reference
+  status: needs_medical_expert
+  label: "референс проекта по умолчанию"
+  table: "таблица 04.10.2026"
+  apply_in_pregnancy: false
+  ranges:
+    hemoglobin: {F: [120, 150], M: [130, 170], primary: who_hb_2024}
+    RBC: {F: [3.8, 5.2], M: [4.3, 5.7]}
+    hematocrit: {F: [36, 46], M: [40, 52]}
+    MCV: {range: [80, 100]}
+    MCH: {range: [27, 34]}
+    MCHC: {range: [320, 360]}
+    RDW: {range: [11.5, 14.5]}
+    platelets: {range: [150, 400]}
+    WBC: {range: [4.0, 10.0]}
+    reticulocytes: {range: [0.68, 1.86], primary: invitro_retic}
+    ferritin: {F: [15, 150], M: [30, 400], primary: cdc_iron}
+    serum_iron: {range: [10, 30], primary: hemasphere_2024}
+    transferrin: {range: [2.0, 4.0], primary: hemasphere_2024}
+    TIBC: {range: [45, 81], primary: hemasphere_2024}
+    UIBC: {range: [27, 63], primary: hemasphere_2024}
+    TSAT: {range: [20, 45], primary: hemasphere_2024}
+    sTfR: {range: [0.8, 2.2], primary: hemasphere_2024}
+    Ret_He: {range: [28, 35], primary: masac_296}
+    vitamin_B12: {range: [350, null], primary: nice_ng239}
+    active_B12: {range: [70, null], primary: nice_ng239}
+    MMA: {range: [null, 0.30], primary: nice_ng239}
+    homocysteine: {range: [5, 15]}
+    folate: {range: [3.1, 19.9]}
+    vitamin_B6: {range: [30, null]}
+    copper: {range: [11, 22]}
+    ceruloplasmin: {F: [0.16, 0.45], M: [0.15, 0.30], primary: invitro_cerulo}
+    CRP: {range: [null, 5]}
+    ESR: {F: [null, 30], M: [null, 20]}
+    creatinine: {F: [44, 80], M: [62, 115]}
+    eGFR: {range: [90, null]}
+    TSH: {range: [0.4, 4.0]}
+    albumin: {range: [35, 50]}
+    LDH: {F: [135, 214], M: [135, 225], primary: gemotest_ldh}
+    indirect_bilirubin: {range: [0, 16.4], primary: smclinic_bili}
+    haptoglobin: {range: [0.83, 2.67], primary: hapto_fallback, fallback: true}
+
+local_references: {}
+
+history:
+  source: project
+  status: needs_medical_expert
+  note: "Пороги динамики и сроки «давно» — выбор проекта: в КР РФ и у ВОЗ таких чисел для взрослых нет; ожидают подтверждения врачом"
+  hb_drop:
+    min_drop_g_l: 10
+    min_drop_pct: 10
+    window_months: 12
+  ferritin_drop:
+    min_drop_pct: 30
+    window_months: 24
+    crossing_beyond_flat: true
+  mcv_drift:
+    min_change_fl: 5
+    window_months: 24
+  persistent_signal:
+    min_records: 2
+    max_gap_months: 24
+  screening_repeat:
+    min_records: 2
+    risks: [elevated, high]
+  stale:
+    months: 12
+    ferritin_low_months: 6
+  flat:
+    default_pct: 5
+    pct: {ferritin: 15, serum_iron: 20, TSAT: 20, CRP: 25, vitamin_B12: 10, folate: 15}
+    abs: {hemoglobin: 5, MCV: 2, MCH: 1, RDW: 0.5, hematocrit: 1.5}
+  limits:
+    max_points: 100
+    max_records: 500

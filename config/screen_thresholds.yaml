@@ -1,0 +1,14 @@
+version: '2026-10-04b'
+_comment: Рабочая точка скрининга скрытого дефицита железа. Пороги вероятности лежат
+  в models/screen-v1/metadata.json (квантили предсказаний по людям без анемии, метки не используются);
+  здесь — выбор точки. Врач команды может выбрать 0.20 или 0.40.
+target: p_ferritin_lt15
+refer_share: 0.3
+high_share: 0.1
+threshold_group: F18-49
+validated_groups:
+- F18-49
+risk_ru:
+  usual: обычный
+  elevated: повышенный
+  high: высокий

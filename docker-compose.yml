@@ -1,0 +1,34 @@
+services:
+  app:
+    build:
+      context: .
+    image: justmedit:0.1.0
+    ports:
+      - "${DL_PUBLISH:-127.0.0.1:8080}:8080"
+    environment:
+      DL_API_KEYS: "${DL_API_KEYS:-}"
+      DL_UI_RATE_PER_MIN: "${DL_UI_RATE_PER_MIN:-120}"
+      DL_MAX_UPLOAD_MB: "${DL_MAX_UPLOAD_MB:-10}"
+      DL_MAX_BATCH: "${DL_MAX_BATCH:-10000}"
+      DL_DATA_DIR: /data
+      DL_DATA_KEY: "${DL_DATA_KEY:-}"
+      DL_DATA_KEY_FILE: "${DL_DATA_KEY_FILE:-}"
+      DL_DATA_MAX_MB: "${DL_DATA_MAX_MB:-512}"
+      DL_MAX_SIGNUPS_PER_DAY: "${DL_MAX_SIGNUPS_PER_DAY:-1000}"
+      DL_SIGNUP_IP_PER_HOUR: "${DL_SIGNUP_IP_PER_HOUR:-30}"
+      DL_COOKIE_SECURE: "${DL_COOKIE_SECURE:-0}"
+      DL_CORS_ORIGINS: "${DL_CORS_ORIGINS:-}"
+      DL_TRUSTED_PROXIES: "${DL_TRUSTED_PROXIES:-}"
+    volumes:
+      - app-data:/data
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /tmp:size=128m,mode=1777
+    mem_limit: 2g
+    pids_limit: 256
+    restart: unless-stopped
+
+volumes:
+  app-data:
